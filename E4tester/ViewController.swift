@@ -9,8 +9,7 @@ class ViewController: UITableViewController {
     
     
     static let EMPATICA_API_KEY = "d77fdbf4efb64e4fba058e8a16624a0a"
-    var participantId: String = "0"
-    var recordingId: String = "0"
+    var myEntryController: EntryController = EntryController()
     
     
     private var devices: [EmpaticaDeviceManager] = []
@@ -24,6 +23,12 @@ class ViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        
+        // Used for debugging reasons.
+        print("Hello World")
+        var pId = myEntryController.participantId
+        var rId = myEntryController.recordingId
+        print("Participant ID", pId)
         
         super.viewDidLoad()
         
