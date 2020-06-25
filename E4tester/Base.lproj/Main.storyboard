@@ -63,6 +63,10 @@
                                 <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                <connections>
+                                    <action selector="getParticipantIdWithSender:" destination="lQ4-SU-VLP" eventType="editingDidEnd" id="Zy3-c4-kN1"/>
+                                    <action selector="getParticipantIdWithSender:" destination="lQ4-SU-VLP" eventType="editingChanged" id="u2L-5m-cj8"/>
+                                </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1S9-a4-qKP" colorLabel="IBBuiltInLabel-Red">
                                 <rect key="frame" x="114" y="366" width="186" height="30"/>
@@ -73,6 +77,7 @@
                                     <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                 </state>
                                 <connections>
+                                    <action selector="startRunWithSender:" destination="lQ4-SU-VLP" eventType="touchDown" id="sep-wp-iXj"/>
                                     <segue destination="IPn-9Y-oR1" kind="push" id="z86-FM-G2A"/>
                                 </connections>
                             </button>
@@ -81,6 +86,10 @@
                         <color key="tintColor" systemColor="systemTealColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Welcome Screen" id="rMe-Dj-6LD"/>
+                    <connections>
+                        <outlet property="button" destination="1S9-a4-qKP" id="ThY-0E-32G"/>
+                        <outlet property="field" destination="SS0-Nf-vu9" id="gk4-Ez-LlM"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CL4-P1-zAU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

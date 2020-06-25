@@ -10,11 +10,50 @@ import UIKit
 
 class EntryController: UIViewController {
     
+    @IBOutlet weak var field: UITextField!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var button: UIButton!
+    
+    var participantId: String = "0"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func textFieldDidChange (field: UITextField){
+        self.getParticipantId(sender: field)
+    }
+    
+    @IBAction func getParticipantId (sender: UITextField) {
+        
+        if(field != nil){
+            self.participantId = field.text!
+            print("Participant ID", participantId)
+        }
+        else{
+            print("No participant ID found.")
+        }
+    }
+    
+    @IBAction func startRun(sender: UIButton){
+
+        let url = URL(string: "http://130.60.24.99:8080/participants/" + participantId + "/recordings/start/")!
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = try! JSONSerialization.data(withJSONObject: [], options: [])
+       
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            guard let data = data else { return }
+            print(response)
+            print(data)
+            print(String(data: data, encoding: .utf8)!)
+        }
+
+        task.resume()
     }
 }

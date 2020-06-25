@@ -9,6 +9,8 @@ class ViewController: UITableViewController {
     
     
     static let EMPATICA_API_KEY = "d77fdbf4efb64e4fba058e8a16624a0a"
+    var participantId: String = "0"
+    var recordingId: String = "0"
     
     
     private var devices: [EmpaticaDeviceManager] = []
