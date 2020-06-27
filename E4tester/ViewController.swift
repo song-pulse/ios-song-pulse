@@ -8,6 +8,17 @@ import UIKit
 class ViewController: UITableViewController {
     
     
+    // Save data from E4
+    var globalTimestamp: Int = 0
+    var globalTemp: Float = 0
+    var globalAccx: Float = 0
+    var globalAccy: Float = 0
+    var globalAccz: Float = 0
+    var globalBvp: Float = 0
+    var globalIbi: Float = 0
+    var globalEda: Float = 0
+    
+    
     static let EMPATICA_API_KEY = "d77fdbf4efb64e4fba058e8a16624a0a"
     var myEntryController: EntryController = EntryController()
     
@@ -23,13 +34,6 @@ class ViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
-        
-        // Used for debugging reasons.
-        print("Hello World")
-        var pId = myEntryController.participantId
-        var rId = myEntryController.recordingId
-        print("Participant ID", pId)
-        
         super.viewDidLoad()
         
         self.tableView.delegate = self
@@ -115,6 +119,12 @@ class ViewController: UITableViewController {
     }
     
     private func deviceStatusDisplay(status : DeviceStatus) -> String {
+        print("Hello World")
+        var pId = myEntryController.participantId
+        var rId = myEntryController.recordingId
+        print("Participant ID", pId)
+        print("Recording ID", rId)
+        
         
         switch status {
             
@@ -196,25 +206,45 @@ extension ViewController: EmpaticaDelegate {
 extension ViewController: EmpaticaDeviceDelegate {
     
     func didReceiveTemperature(_ temp: Float, withTimestamp timestamp: Double, fromDevice device: EmpaticaDeviceManager!) {
-        
+        // Save the value in the global variable.
+        self.globalTemp = temp
         print("\(device.serialNumber!) TEMP { \(temp) }")
     }
     
     func didReceiveAccelerationX(_ x: Int8, y: Int8, z: Int8, withTimestamp timestamp: Double, fromDevice device: EmpaticaDeviceManager!) {
-        
+        // Save the values in the global variable.
+        self.globalAccx = Float(x)
+        self.globalAccy = Float(y)
+        self.globalAccz = Float(z)
         print("\(device.serialNumber!) ACC > {x: \(x), y: \(y), z: \(z)}")
     }
     
     func didReceiveTag(atTimestamp timestamp: Double, fromDevice device: EmpaticaDeviceManager!) {
-        
+        //Save the value in the global variable.
+        self.globalTimestamp = Int(timestamp)
         print("\(device.serialNumber!) TAG received { \(timestamp) }")
     }
     
     func didReceiveGSR(_ gsr: Float, withTimestamp timestamp: Double, fromDevice device: EmpaticaDeviceManager!) {
         
         print("\(device.serialNumber!) GSR { \(abs(gsr)) }")
-        
+        //Save the value in the gobal variable.
+        self.globalEda = Float(gsr)
         self.updateValue(device: device, string: "\(String(format: "%.2f", abs(gsr))) µS")
+    }
+    
+    func didReceiveIBI(_ ibi: Float, withTimestamp timestamp: Double, fromDevice device: EmpaticaDeviceManager!) {
+        
+        print("\(device.serialNumber!) IBI { \(abs(ibi)) }")
+        //Save the value in the gobal variable.
+        self.globalIbi = Float(ibi)
+    }
+    
+    func didReceiveBVP(_ bvp: Float, withTimestamp timestamp: Double, fromDevice device: EmpaticaDeviceManager!){
+        
+        print("\(device.serialNumber!) BVP { \(abs(bvp)) }")
+        //Save the value in the gobal variable.
+        self.globalBvp = Float(bvp)
     }
     
     func didUpdate( _ status: DeviceStatus, forDevice device: EmpaticaDeviceManager!) {
