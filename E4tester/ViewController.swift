@@ -21,7 +21,6 @@ class ViewController: UITableViewController {
     var myEntryController: EntryController = EntryController()
     
     var pId = StructOperation.glovalVariable.pId
-    var rId = "125"
     
     private var devices: [EmpaticaDeviceManager] = []
     
@@ -153,10 +152,7 @@ class ViewController: UITableViewController {
     // This function sends the E4 data (POST request)
     func sendE4Data(){
         // Construct the URL with the participant ID that was entered by the user and the recording ID.
-        let url = URL(string: "http://130.60.24.99:8080/participants/" + self.pId + "/recordings/" + self.rId + "/values/timestamps")!
-
-        print("URL: ", url)
-        
+        let url = URL(string: "http://130.60.24.99:8080/participants/" + self.pId + "/recordings/" + StructOperation.glovalVariable.rId + "/values/timestamps")!
         
         // Create the Json object
         let json: [String: Any] = ["timestamp": self.globalTimestamp, "eda": self.globalEda, "ibi": self.globalIbi, "temp": self.globalTemp, "acc_x": self.globalAccx, "acc_y": self.globalAccy, "acc_z": self.globalAccz]
@@ -289,7 +285,6 @@ extension ViewController: EmpaticaDeviceDelegate {
             break
             
         case kDeviceStatusConnected:
-            
             print("[didUpdate] Connected \(device.serialNumber!).")
             break
             

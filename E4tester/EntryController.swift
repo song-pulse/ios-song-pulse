@@ -59,9 +59,10 @@ class EntryController: UIViewController {
             let stringData = String(data: data, encoding: .utf8)!
             let splitData = stringData.split(separator: ",")
             self.recordingId = String(splitData[2].split(separator: ":")[1])
-            StructOperation.glovalVariable.rId = self.recordingId
             print(String(data: data, encoding: .utf8)!)
             print("Recording ID", self.recordingId)
+            StructOperation.glovalVariable.rId = self.recordingId
+            print("RID in Struct: ", StructOperation.glovalVariable.rId)
         }
         task.resume()
     }
