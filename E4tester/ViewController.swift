@@ -7,7 +7,6 @@ import UIKit
 
 class ViewController: UITableViewController {
     
-    
     // Save data from E4
     var globalTimestamp: Int = 0
     var globalTemp: Float = 0
@@ -17,11 +16,12 @@ class ViewController: UITableViewController {
     var globalBvp: Float = 0
     var globalIbi: Float = 0
     var globalEda: Float = 0
-    
-    
+
     static let EMPATICA_API_KEY = "d77fdbf4efb64e4fba058e8a16624a0a"
     var myEntryController: EntryController = EntryController()
     
+    var pId = StructOperation.glovalVariable.pId
+    var rId = "125"
     
     private var devices: [EmpaticaDeviceManager] = []
     
@@ -119,13 +119,6 @@ class ViewController: UITableViewController {
     }
     
     private func deviceStatusDisplay(status : DeviceStatus) -> String {
-        print("Hello World")
-        var pId = myEntryController.participantId
-        var rId = myEntryController.recordingId
-        print("Participant ID", pId)
-        print("Recording ID", rId)
-        
-        
         switch status {
             
         case kDeviceStatusDisconnected:
@@ -155,6 +148,33 @@ class ViewController: UITableViewController {
             
             self.discover()
         }
+    }
+    
+    // This function sends the E4 data (POST request)
+    func sendE4Data(){
+        // Construct the URL with the participant ID that was entered by the user and the recording ID.
+        let url = URL(string: "http://130.60.24.99:8080/participants/" + self.pId + "/recordings/" + self.rId + "/values/timestamps")!
+
+        print("URL: ", url)
+        
+        
+        // Create the Json object
+        let json: [String: Any] = ["timestamp": self.globalTimestamp, "eda": self.globalEda, "ibi": self.globalIbi, "temp": self.globalTemp, "acc_x": self.globalAccx, "acc_y": self.globalAccy, "acc_z": self.globalAccz]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        
+        // Post request.
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        //request.httpBody = try! JSONSerialization.data(withJSONObject: [], options: [])
+        // insert json data to the request
+        request.httpBody = jsonData
+
+        // Get the recording ID out of the response.
+        let task = URLSession.shared.dataTask(with: request) {(data, response, error) in
+            guard let data = data else { return }
+            print("Data: ", data)
+        }
+        task.resume()
     }
 }
 
@@ -209,6 +229,8 @@ extension ViewController: EmpaticaDeviceDelegate {
         // Save the value in the global variable.
         self.globalTemp = temp
         print("\(device.serialNumber!) TEMP { \(temp) }")
+        
+        sendE4Data()
     }
     
     func didReceiveAccelerationX(_ x: Int8, y: Int8, z: Int8, withTimestamp timestamp: Double, fromDevice device: EmpaticaDeviceManager!) {

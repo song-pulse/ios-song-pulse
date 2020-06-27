@@ -34,6 +34,7 @@ class EntryController: UIViewController {
         
         if(field != nil){
             self.participantId = field.text!
+            StructOperation.glovalVariable.pId = self.participantId
         }
         else{
             print("No participant ID found.")
@@ -58,6 +59,7 @@ class EntryController: UIViewController {
             let stringData = String(data: data, encoding: .utf8)!
             let splitData = stringData.split(separator: ",")
             self.recordingId = String(splitData[2].split(separator: ":")[1])
+            StructOperation.glovalVariable.rId = self.recordingId
             print(String(data: data, encoding: .utf8)!)
             print("Recording ID", self.recordingId)
         }

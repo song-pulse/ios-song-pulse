@@ -14,6 +14,7 @@
 		55591B731F2884AC0084CF0C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55591B711F2884AC0084CF0C /* LaunchScreen.storyboard */; };
 		59CAB61E207770890052910F /* E4link.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59CAB61D207770890052910F /* E4link.framework */; };
 		59CAB626207771C30052910F /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59CAB625207771C30052910F /* CoreBluetooth.framework */; };
+		C70A703724A7334E00B5D877 /* ParticipantIdRecordingId.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70A703624A7334E00B5D877 /* ParticipantIdRecordingId.swift */; };
 		C7FB7F9924A275F500D65DC7 /* EntryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB7F9824A275F500D65DC7 /* EntryController.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,6 +42,7 @@
 		59CAB61D207770890052910F /* E4link.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = E4link.framework; path = Libs/E4link.framework; sourceTree = "<group>"; };
 		59CAB6222077716E0052910F /* E4tester-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "E4tester-Bridging-Header.h"; sourceTree = "<group>"; };
 		59CAB625207771C30052910F /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		C70A703624A7334E00B5D877 /* ParticipantIdRecordingId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantIdRecordingId.swift; sourceTree = "<group>"; };
 		C7FB7F9824A275F500D65DC7 /* EntryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -85,6 +87,7 @@
 				55591B741F2884AD0084CF0C /* Info.plist */,
 				59CAB6222077716E0052910F /* E4tester-Bridging-Header.h */,
 				C7FB7F9824A275F500D65DC7 /* EntryController.swift */,
+				C70A703624A7334E00B5D877 /* ParticipantIdRecordingId.swift */,
 			);
 			path = E4tester;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				C7FB7F9924A275F500D65DC7 /* EntryController.swift in Sources */,
 				55591B6B1F2884AC0084CF0C /* ViewController.swift in Sources */,
 				55591B691F2884AC0084CF0C /* AppDelegate.swift in Sources */,
+				C70A703724A7334E00B5D877 /* ParticipantIdRecordingId.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
