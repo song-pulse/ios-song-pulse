@@ -12,6 +12,5 @@ class StructOperation {
      struct glovalVariable {
         static var pId = String()
         static var rId = String()
-        
     }
 }

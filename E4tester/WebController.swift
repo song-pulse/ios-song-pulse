@@ -11,9 +11,9 @@ import WebKit
 class WebController: UIViewController, WKNavigationDelegate {
     
     var webView: WKWebView!
+    public var cookies: [HTTPCookie] = []
     
     override func loadView() {
-        print("Load View")
         webView = WKWebView()
         webView.navigationDelegate = self
         view = webView
@@ -21,54 +21,46 @@ class WebController: UIViewController, WKNavigationDelegate {
     
     // Open the authorization to spotify as soon as the view was loaded.
     override func viewDidLoad(){
-        print("ViewDidLoad")
-            
+        
         let spotifyURLAuthorization = URL(string:"http://130.60.24.99:8080/spotify/authorize")!
         webView.load(URLRequest(url: spotifyURLAuthorization))
         webView.allowsBackForwardNavigationGestures = true
     }
     
     func webView(_ webView: WKWebView,
-    decidePolicyFor navigationAction: WKNavigationAction,
-    decisionHandler: @escaping (WKNavigationActionPolicy) -> Void)
+                 decidePolicyFor navigationAction: WKNavigationAction,
+                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void)
     {
-        print("Start of webView.")
         
         guard let url = navigationAction.request.url else {
             print("URL :", navigationAction.request.url)
             decisionHandler(.allow)
             return
         }
-
+        
         if url.absoluteString.contains("/spotify/whoami") {
             // this means login successful
-            print("who am I.")
             
+            let dataStore = WKWebsiteDataStore.default()
             if #available(iOS 13.0, *) {
-                print("Navigate")
+                dataStore.httpCookieStore.getAllCookies({ (cookies) in
+                    print(cookies)
+                    self.cookies = cookies
+                    CookieStructOperation.globalVariable.cookie = self.cookies[0]
+                })
                 navigateToMainInterface()
-            } else {
-                // Fallback on earlier versions
+                
+                decisionHandler(.cancel)
             }
-            
-            decisionHandler(.cancel)
-            
-
-//            let newEntryController = EntryController()
-//            newEntryController.modalPresentationStyle = .fullScreen
-//
-//            self.navigationController?.popViewController(animated: true)
-//
-//            print("pop")
-//
-//            decisionHandler(.cancel)
-//            _ = self.navigationController?.pushViewController(newEntryController, animated: false)
-//
-//            print("push")
+            else {
+                // Fallback on earlier versions
+                print("IOS 13 is needed.")
+            }
         }
         else {
             decisionHandler(.allow)
         }
+        
     }
     
     @available(iOS 13.0, *)

@@ -10,15 +10,8 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-//
-//    let rootViewController = WebController()
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-
-//        let navController: UINavigationController = UINavigationController(rootViewController: rootViewController)
-//        self.window?.rootViewController = navController
-//        self.window?.makeKeyAndVisible()
 
         EmpaticaAPI.initialize()
         return true

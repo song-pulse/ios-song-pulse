@@ -16,6 +16,8 @@ class ViewController: UITableViewController {
     var globalBvp: Float = 0
     var globalIbi: Float = 0
     var globalEda: Float = 0
+    
+    var cookie: HTTPCookie = CookieStructOperation.globalVariable.cookie
 
     static let EMPATICA_API_KEY = "d77fdbf4efb64e4fba058e8a16624a0a"
     var myEntryController: EntryController = EntryController()
@@ -161,6 +163,8 @@ class ViewController: UITableViewController {
         // Post request.
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
+        let jar = HTTPCookieStorage.shared
+        jar.setCookie(cookie)
         //request.httpBody = try! JSONSerialization.data(withJSONObject: [], options: [])
         // insert json data to the request
         request.httpBody = jsonData
