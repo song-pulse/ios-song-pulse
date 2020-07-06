@@ -44,7 +44,6 @@ class WebController: UIViewController, WKNavigationDelegate {
             let dataStore = WKWebsiteDataStore.default()
             if #available(iOS 13.0, *) {
                 dataStore.httpCookieStore.getAllCookies({ (cookies) in
-                    print(cookies)
                     self.cookies = cookies
                     CookieStructOperation.globalVariable.cookie = self.cookies[0]
                 })

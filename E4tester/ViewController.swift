@@ -153,6 +153,7 @@ class ViewController: UITableViewController {
     
     // This function sends the E4 data (POST request)
     func sendE4Data(){
+        print("Cookie", self.cookie)
         // Construct the URL with the participant ID that was entered by the user and the recording ID.
         let url = URL(string: "http://130.60.24.99:8080/participants/" + self.pId + "/recordings/" + StructOperation.glovalVariable.rId + "/values/timestamps")!
         
@@ -160,11 +161,13 @@ class ViewController: UITableViewController {
         let json: [String: Any] = ["timestamp": self.globalTimestamp, "eda": self.globalEda, "ibi": self.globalIbi, "temp": self.globalTemp, "acc_x": self.globalAccx, "acc_y": self.globalAccy, "acc_z": self.globalAccz]
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
+        // Set cookie.
+        let jar = HTTPCookieStorage.shared
+        jar.setCookie(cookie)
+        
         // Post request.
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let jar = HTTPCookieStorage.shared
-        jar.setCookie(cookie)
         //request.httpBody = try! JSONSerialization.data(withJSONObject: [], options: [])
         // insert json data to the request
         request.httpBody = jsonData
@@ -175,6 +178,14 @@ class ViewController: UITableViewController {
             print("Data: ", data)
         }
         task.resume()
+    }
+    
+    // This function stops a recording.
+    @IBAction func stopRecording(sender: UIButton){
+        
+        for device in devices{
+            self.disconnect(device: device)
+        }
     }
 }
 
