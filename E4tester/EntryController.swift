@@ -19,6 +19,7 @@ class EntryController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Entry Controller")
     }
 
     override func didReceiveMemoryWarning() {
