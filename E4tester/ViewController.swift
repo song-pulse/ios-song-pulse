@@ -9,6 +9,7 @@ class ViewController: UITableViewController {
     
     // Save data from E4
     var globalTimestamp: Int = 0
+    var counter: Int = 0
     var globalTemp: Float = 0
     var globalAccx: Float = 0
     var globalAccy: Float = 0
@@ -241,7 +242,10 @@ extension ViewController: EmpaticaDeviceDelegate {
         self.globalTemp = temp
         print("\(device.serialNumber!) TEMP { \(temp) }")
         
-        sendE4Data()
+        self.counter = self.counter + 1 // huge hack, temp is measured 4 x per second so with modulo 40 == 0 we can reach a send frequency of about 10 seconds
+        if self.counter % 40 == 0 {
+            sendE4Data()
+        }
     }
     
     func didReceiveAccelerationX(_ x: Int8, y: Int8, z: Int8, withTimestamp timestamp: Double, fromDevice device: EmpaticaDeviceManager!) {
