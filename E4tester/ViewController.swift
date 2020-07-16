@@ -154,7 +154,6 @@ class ViewController: UITableViewController {
     
     // This function sends the E4 data (POST request)
     func sendE4Data(){
-        print("Cookie", self.cookie)
         // Construct the URL with the participant ID that was entered by the user and the recording ID.
         let url = URL(string: "http://130.60.24.99:8080/participants/" + self.pId + "/recordings/" + StructOperation.glovalVariable.rId + "/values/timestamps")!
         
@@ -164,7 +163,7 @@ class ViewController: UITableViewController {
         
         // Set cookie.
         let jar = HTTPCookieStorage.shared
-        jar.setCookie(cookie)
+        jar.setCookies([cookie], for: url, mainDocumentURL: nil)
         
         // Post request.
         var request = URLRequest(url: url)

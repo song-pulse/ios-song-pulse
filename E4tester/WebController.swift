@@ -27,39 +27,27 @@ class WebController: UIViewController, WKNavigationDelegate {
         webView.allowsBackForwardNavigationGestures = true
     }
     
-    func webView(_ webView: WKWebView,
-                 decidePolicyFor navigationAction: WKNavigationAction,
-                 decisionHandler: @escaping (WKNavigationActionPolicy) -> Void)
-    {
-        
-        guard let url = navigationAction.request.url else {
-            print("URL :", navigationAction.request.url)
-            decisionHandler(.allow)
-            return
-        }
-        
-        if url.absoluteString.contains("/spotify/whoami") {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        if webView.url!.absoluteString.hasSuffix("/spotify/whoami") {
             // this means login successful
             
             let dataStore = WKWebsiteDataStore.default()
             if #available(iOS 13.0, *) {
                 dataStore.httpCookieStore.getAllCookies({ (cookies) in
-                    self.cookies = cookies
-                    CookieStructOperation.globalVariable.cookie = self.cookies[0]
+                    for cookie in cookies {
+                        if cookie.name == "username" {
+                            print(cookie)
+                            CookieStructOperation.globalVariable.cookie = cookie
+                            self.navigateToMainInterface()
+                        }
+                    }
                 })
-                navigateToMainInterface()
-                
-                decisionHandler(.cancel)
             }
             else {
                 // Fallback on earlier versions
                 print("IOS 13 is needed.")
             }
         }
-        else {
-            decisionHandler(.allow)
-        }
-        
     }
     
     @available(iOS 13.0, *)
