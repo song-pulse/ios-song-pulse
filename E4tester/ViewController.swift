@@ -238,6 +238,7 @@ extension ViewController: EmpaticaDeviceDelegate {
     
     func didReceiveTemperature(_ temp: Float, withTimestamp timestamp: Double, fromDevice device: EmpaticaDeviceManager!) {
         // Save the value in the global variable.
+        self.globalTimestamp = Int(timestamp)
         self.globalTemp = temp
         print("\(device.serialNumber!) TEMP { \(temp) }")
         
